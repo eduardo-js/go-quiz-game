@@ -48,7 +48,7 @@ func parseLines(lines [][]string) []problem {
 }
 
 func exit(msg string) {
-	fmt.Println(msg)
+	printToConsole(msg)
 	os.Exit(1)
 }
 
@@ -62,7 +62,7 @@ func quizGame(lines [][]string, timeLimit *int) {
 	problems := parseLines(lines)
 	var correct = 0
 	for idx, problem := range problems {
-		fmt.Printf("Problem #%d: %s = \n", idx+1, problem.question)
+		printToConsole(fmt.Sprintf("Problem #%d: %s = \n", idx+1, problem.question))
 		answerChan := make(chan string)
 		go func() {
 			var answer string
@@ -71,7 +71,7 @@ func quizGame(lines [][]string, timeLimit *int) {
 		}()
 		select {
 		case <-timer.C:
-			fmt.Printf("You scored %d out of %d.\n", correct, len(problems))
+			printToConsole(fmt.Sprintf("You scored %d out of %d.\n", correct, len(problems)))
 			return
 		case answer := <-answerChan:
 			if answer == problem.answer {
@@ -79,5 +79,9 @@ func quizGame(lines [][]string, timeLimit *int) {
 			}
 		}
 	}
-	fmt.Printf("You scored %d out of %d\n", correct, len(problems))
+	printToConsole(fmt.Sprintf("You scored %d out of %d\n", correct, len(problems)))
+}
+
+func printToConsole(str string) {
+	fmt.Println(str)
 }
