@@ -62,7 +62,7 @@ func quizGame(lines [][]string, timeLimit *int) {
 	problems := parseLines(lines)
 	var correct = 0
 	for idx, problem := range problems {
-		printToConsole(fmt.Sprintf("Problem #%d: %s = \n", idx+1, problem.question))
+		printToConsole(fmt.Sprintf("Problem #%d: %s = ", idx+1, problem.question))
 		answerChan := make(chan string)
 		go func() {
 			var answer string
